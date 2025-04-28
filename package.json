@@ -1,11 +1,11 @@
 {
   "name": "seo-manager-pro",
-  "version": "25.4.30",
+  "version": "25.4.31",
   "description": "A powerful SEO meta and schema manager for Angular, React, Vue and Vanilla JS apps.",
   "main": "dist/seo-manager-pro.js",
   "types": "dist/seo-manager-pro.d.ts",
   "files": [
-    "build/",
+    "dist/",
     "README.md",
     "LICENSE.txt"
   ],
