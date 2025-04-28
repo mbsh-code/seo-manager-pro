@@ -3,11 +3,15 @@
     "target": "ES6",
     "module": "CommonJS",
     "declaration": true,
-    "outDir": "./",
+    "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*", "seo-manager-pro.d.ts"],
+  "exclude": ["node_modules"],
+  "typeRoots": [
+    "node_modules/@types",
+    "node_modules/seo-manager-pro/dist"
+  ]
 }

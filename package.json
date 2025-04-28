@@ -1,9 +1,9 @@
 {
   "name": "seo-manager-pro",
-  "version": "25.4.33",
+  "version": "25.4.36",
   "description": "A powerful SEO meta and schema manager for Angular, React, Vue and Vanilla JS apps.",
-  "main": "seo-manager-pro.js",
-  "types": "seo-manager-pro.d.ts",
+  "main": "dist/seo-manager-pro.js",
+  "types": "dist/seo-manager-pro.d.ts",
   "files": [
     "dist/",
     "README.md",
@@ -33,8 +33,9 @@
   },
   "exports": {
     ".": {
-      "import": "./esm/seo-manager-pro.js",
-      "require": "./cjs/seo-manager-pro.js"
+      "import": "./dist/esm/seo-manager-pro.js",
+      "require": "./dist/cjs/seo-manager-pro.js"
     }
   }
+
 }
