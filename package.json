@@ -1,0 +1,33 @@
+{
+  "name": "seo-manager-pro",
+  "version": "1.0.0",
+  "description": "A powerful SEO meta and schema manager for Angular, React, Vue and Vanilla JS apps.",
+  "main": "dist/seo-manager-pro.js",
+  "types": "dist/seo-manager-pro.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "build:esm": "tsc --project tsconfig.esm.json"
+  },
+  "author": "MohammadBagher Sharifi",
+  "license": "MIT",
+  "keywords": [
+    "SEO",
+    "Meta",
+    "Schema",
+    "Angular",
+    "React",
+    "Vue",
+    "typescript",
+    "seo-manager"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mbsh-code/seo-manager-pro.git"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/esm/seo-manager-pro.js",
+      "require": "./dist/seo-manager-pro.js"
+    }
+  }
+}

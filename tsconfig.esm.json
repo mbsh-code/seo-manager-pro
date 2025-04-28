@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outDir": "dist/esm",
+    "target": "es2020",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "dist/esm/types",
+    "emitDeclarationOnly": false,
+    "esModuleInterop": true,
+    "strict": true
+  },
+  "include": ["src/**/*"]
+}
