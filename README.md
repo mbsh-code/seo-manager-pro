@@ -1,8 +1,6 @@
 # SEO Manager Pro
 
 [![NPM Version](https://img.shields.io/npm/v/seo-manager-pro.svg)](https://www.npmjs.com/package/seo-manager-pro)  
-[![License](https://img.shields.io/npm/l/seo-manager-pro.svg)](https://github.com/mbsh-code/seo-manager-pro.git)  
-[![Downloads](https://img.shields.io/npm/dm/seo-manager-pro.svg)](https://www.npmjs.com/package/seo-manager-pro)
 
 A powerful SEO Manager for Angular, React, Vue, and Vanilla JS projects.  
 Easily set meta tags, Open Graph tags, Schema.org structured data, canonical URLs, robots meta, and more!
