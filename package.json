@@ -1,15 +1,19 @@
 {
   "name": "seo-manager-pro",
-  "version": "25.4.28",
+  "version": "25.4.29",
   "description": "A powerful SEO meta and schema manager for Angular, React, Vue and Vanilla JS apps.",
   "main": "dist/seo-manager-pro.js",
   "types": "dist/seo-manager-pro.d.ts",
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE.txt"
+  ],
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run clean && npm run build",
-    "build:esm": "tsc --project tsconfig.esm.json",
-    "build:cjs": "tsc --project tsconfig.json"
+    "build:esm": "tsc --project tsconfig.esm.json"
   },
   "author": "MohammadBagher Sharifi",
   "license": "MIT",

@@ -1,0 +1,13 @@
+# NPM ignore file
+
+# Ignore all source code
+src/
+
+# Ignore TypeScript config files
+tsconfig.json
+tsconfig.esm.json
+
+# Ignore other unnecessary files
+.idea/
+.git/
+*.log
