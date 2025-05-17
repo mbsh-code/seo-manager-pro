@@ -1,6 +1,6 @@
 {
   "name": "seo-manager-pro",
-  "version": "25.4.36",
+  "version": "25.5.17",
   "description": "A powerful SEO meta and schema manager for Angular, React, Vue and Vanilla JS apps.",
   "main": "dist/seo-manager-pro.js",
   "types": "dist/seo-manager-pro.d.ts",
@@ -12,11 +12,8 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist",
-    "prepublishOnly": "npm run clean && npm run build",
-    "build:esm": "tsc --project tsconfig.esm.json"
+    "prepublishOnly": "npm run clean && npm run build"
   },
-  "author": "MohammadBagher Sharifi",
-  "license": "MIT",
   "keywords": [
     "SEO",
     "Meta",
@@ -27,15 +24,10 @@
     "typescript",
     "seo-manager"
   ],
+  "author": "MohammadBagher Sharifi",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/mbsh-code/seo-manager-pro.git"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/esm/seo-manager-pro.js",
-      "require": "./dist/cjs/seo-manager-pro.js"
-    }
   }
-
 }
