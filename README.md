@@ -491,6 +491,18 @@ import {
 ```
 
 ---
+## 🔗 Live Demos
+
+Want to see how `seo-manager-pro` works in real projects?
+
+➡️ [See all demos on GitHub](https://github.com/mbsh-code/seo-manager-pro-demos)
+
+Includes:
+- ✅ Angular Demo
+- ✅ React Demo
+- ✅ Vanilla JavaScript Demo
+
+---
 
 ## License
 
