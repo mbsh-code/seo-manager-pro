@@ -1,12 +1,27 @@
 {
   "name": "seo-manager-pro",
   "version": "26.6.20",
-  "description": "A powerful SEO meta and schema manager for Angular, React, Vue and Vanilla JS apps.",
+  "description": "SEO + AEO manager for Angular, React, Vue and Vanilla JS — search engines and AI answer engines.",
   "main": "dist/seo-manager-pro.js",
   "types": "dist/seo-manager-pro.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/seo-manager-pro.d.ts",
+      "default": "./dist/seo-manager-pro.js"
+    },
+    "./seo": {
+      "types": "./dist/seo/seo-manager.d.ts",
+      "default": "./dist/seo/seo-manager.js"
+    },
+    "./aeo": {
+      "types": "./dist/aeo/aeo-manager.d.ts",
+      "default": "./dist/aeo/aeo-manager.js"
+    }
+  },
   "files": [
     "dist/",
     "README.md",
+    "llms.txt",
     "LICENSE.txt"
   ],
   "scripts": {
@@ -16,13 +31,18 @@
   },
   "keywords": [
     "SEO",
+    "AEO",
+    "GEO",
+    "AI",
+    "llms.txt",
     "Meta",
     "Schema",
     "Angular",
     "React",
     "Vue",
     "typescript",
-    "seo-manager"
+    "seo-manager",
+    "answer-engine-optimization"
   ],
   "author": "MohammadBagher Sharifi",
   "license": "MIT",

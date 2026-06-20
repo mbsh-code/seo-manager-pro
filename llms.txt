@@ -1,0 +1,39 @@
+# seo-manager-pro
+
+> Lightweight SEO + AEO manager for Angular, React, Vue, and Vanilla JS SPAs.
+
+This package exposes two separate managers:
+
+- `SeoManager` — classic search engine optimization (Google, Bing, social previews)
+- `AeoManager` — answer engine optimization for AI crawlers and LLM agents
+
+## Docs
+
+- [README](https://github.com/mbsh-code/seo-manager-pro/blob/main/README.md): full API reference and examples
+- [npm package](https://www.npmjs.com/package/seo-manager-pro)
+
+## Quick API
+
+```typescript
+import { SeoManager, AeoManager, AeoPresets } from 'seo-manager-pro';
+
+SeoManager.updateSeo({ title: '...', description: '...' });
+AeoManager.updateAeo(AeoPresets.article({ title, description, url, author, publishedAt }));
+AeoManager.generateLlmsTxt({ siteName, description, pages: [...] });
+```
+
+## SEO exports
+
+- `SeoManager`, `SeoManagerPro` (alias)
+- `SeoConfig`, `SchemaType`, `OpenGraphConfig`, `TwitterConfig`, and related types
+
+## AEO exports
+
+- `AeoManager` — `updateAeo()`, `resetAeo()`, `generateLlmsTxt()`, `buildPageSummaryJson()`
+- `AeoPresets` — `article()`, `product()`, `faq()`, `howTo()`
+- `generateLlmsTxt()` — standalone llms.txt generator
+- `AeoConfig`, `PageSummary`, `LlmsTxtConfig`, `AiCrawlerBot`, and related types
+
+## Optional
+
+- [LICENSE.txt](https://github.com/mbsh-code/seo-manager-pro/blob/main/LICENSE.txt)

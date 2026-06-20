@@ -2,9 +2,16 @@
 
 [![NPM Version](https://img.shields.io/npm/v/seo-manager-pro.svg)](https://www.npmjs.com/package/seo-manager-pro)
 
-A lightweight, framework-agnostic SEO manager for **Angular**, **React**, **Vue**, and **Vanilla JS** SPAs.
+A lightweight, framework-agnostic **SEO + AEO** manager for **Angular**, **React**, **Vue**, and **Vanilla JS** SPAs.
 
-Set meta tags, Open Graph, Twitter Cards, canonical URLs, hreflang, robots directives, icons, and Schema.org JSON-LD from a single API — with full TypeScript support and SSR-safe guards.
+The package is split into two independent modules:
+
+| Module | Class | Purpose |
+|--------|-------|---------|
+| **SEO** | `SeoManager` | Google, Bing, social previews (Open Graph, Twitter, canonical, robots) |
+| **AEO** | `AeoManager` | AI answer engines (ChatGPT, Claude, Perplexity) — llms.txt, page summaries, AI robots, FAQ/HowTo schema |
+
+Use them together or separately. Each has its own `reset()` method and does not interfere with the other.
 
 ---
 
@@ -25,6 +32,21 @@ Set meta tags, Open Graph, Twitter Cards, canonical URLs, hreflang, robots direc
 | **Cleanup** | `resetSeo()` removes everything the library injected |
 | **SSR-safe** | No-op when `document` is unavailable (Node / SSR) |
 
+### AEO (Answer Engine Optimization)
+
+| Category | What you get |
+|----------|--------------|
+| **Page Summary** | Machine-readable JSON + `abstract` / `summary` meta for AI parsers |
+| **AI Crawlers** | Per-bot meta hints (`GPTBot`, `ClaudeBot`, `PerplexityBot`, …) |
+| **llms.txt** | `generateLlmsTxt()` + discoverable link tag |
+| **Markdown alt** | Link to Markdown version of the page |
+| **FAQ / HowTo** | Auto `FAQPage` and `HowTo` JSON-LD |
+| **Entities** | `@graph` entity markup with `sameAs` for AI citation |
+| **Citation** | Author, dates, license, publisher for AI attribution |
+| **Speakable** | `SpeakableSpecification` for voice assistants |
+| **Presets** | `AeoPresets.article()`, `.product()`, `.faq()`, `.howTo()` |
+| **Cleanup** | `resetAeo()` removes all AEO-injected tags |
+
 ---
 
 ## Installation
@@ -42,45 +64,102 @@ yarn add seo-manager-pro
 ## Quick Start
 
 ```typescript
-import { SeoManagerPro } from 'seo-manager-pro';
+import { SeoManager, AeoManager, AeoPresets } from 'seo-manager-pro';
 
-SeoManagerPro.updateSeo({
+// Classic SEO (search engines + social)
+SeoManager.updateSeo({
   title: 'Home Page | My Shop',
   description: 'Welcome to the best online store.',
   image: 'https://example.com/og-image.jpg',
   canonicalUrl: 'https://example.com/',
   robots: 'index,follow',
-  keywords: ['shop', 'online', 'deals'],
-  author: 'My Shop Team',
-  themeColor: '#1a1a2e',
-  language: 'en',
-  openGraph: {
-    siteName: 'My Shop',
-    locale: 'en_US',
-    type: 'website',
-    imageAlt: 'My Shop homepage banner',
-    imageWidth: 1200,
-    imageHeight: 630,
+  openGraph: { siteName: 'My Shop', locale: 'en_US' },
+  twitter: { card: 'summary_large_image', site: '@myshop' },
+});
+
+// AEO (AI answer engines)
+AeoManager.updateAeo({
+  llmsTxtUrl: 'https://example.com/llms.txt',
+  pageSummary: {
+    title: 'My Shop',
+    description: 'Online store for electronics and accessories.',
+    url: 'https://example.com/',
+    keyPoints: ['Free shipping', '24/7 support', 'Secure checkout'],
+    topics: ['ecommerce', 'electronics'],
   },
-  twitter: {
-    card: 'summary_large_image',
-    site: '@myshop',
-    creator: '@myshop',
+  aiRobots: {
+    GPTBot: 'allow',
+    ClaudeBot: 'allow',
+    PerplexityBot: 'allow',
   },
 });
+
+// Or use an AEO preset (ideal for AI coding tools)
+AeoManager.updateAeo(
+  AeoPresets.article({
+    title: '10 SEO Tips',
+    description: 'Practical tips for SPA SEO.',
+    url: 'https://example.com/blog/seo-tips',
+    author: 'Jane Doe',
+    publishedAt: '2025-06-01T10:00:00Z',
+    keyPoints: ['Use canonical URLs', 'Add structured data'],
+  })
+);
 ```
+
+> `SeoManagerPro` is still exported as an alias for `SeoManager` (backward compatible).
 
 ---
 
 ## API Reference
 
-### `SeoManagerPro.updateSeo(config: SeoConfig)`
+### SEO — `SeoManager.updateSeo(config: SeoConfig)`
 
-Updates all SEO tags for the current page. Previous tags injected by this library are removed first, so route changes stay clean.
+Updates all SEO tags for the current page. Previous SEO tags injected by this library are removed first.
 
-### `SeoManagerPro.resetSeo()`
+### SEO — `SeoManager.resetSeo()`
 
-Removes every tag/link/script the library added and clears `document.title` and `<html lang>`.
+Removes every SEO tag/link/script the library added and clears `document.title` and `<html lang>`.
+
+### AEO — `AeoManager.updateAeo(config: AeoConfig)`
+
+Injects AI-friendly metadata: page summary JSON, FAQ/HowTo schema, entity graphs, llms.txt link, and AI crawler hints.
+
+### AEO — `AeoManager.resetAeo()`
+
+Removes all AEO-injected tags without touching SEO tags.
+
+### AEO — `AeoManager.generateLlmsTxt(config: LlmsTxtConfig): string`
+
+Generates `llms.txt` markdown content. Host it at `https://yoursite.com/llms.txt`:
+
+```typescript
+const content = AeoManager.generateLlmsTxt({
+  siteName: 'My Shop',
+  description: 'Online electronics store.',
+  pages: [
+    { title: 'Products', url: 'https://example.com/products', summary: 'All products' },
+    { title: 'FAQ', url: 'https://example.com/faq', summary: 'Common questions' },
+  ],
+});
+// Serve `content` as a static file at /llms.txt
+```
+
+### AEO — `AeoPresets`
+
+| Method | Use case |
+|--------|----------|
+| `AeoPresets.article({...})` | Blog posts and articles |
+| `AeoPresets.product({...})` | Product pages |
+| `AeoPresets.faq({...})` | FAQ pages |
+| `AeoPresets.howTo({...})` | Tutorials and guides |
+
+### Subpath imports
+
+```typescript
+import { SeoManager } from 'seo-manager-pro/seo';
+import { AeoManager, AeoPresets } from 'seo-manager-pro/aeo';
+```
 
 ---
 
@@ -243,6 +322,71 @@ customMetaTags: [
   { name: 'referrer', content: 'strict-origin-when-cross-origin' },
   { name: 'format-detection', content: 'telephone=no' },
 ]
+```
+
+---
+
+## `AeoConfig` Options
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `pageSummary` | `PageSummary` | Title, description, key points, topics, entities — injected as JSON |
+| `aiRobots` | `Partial<Record<AiCrawlerBot, AiCrawlerPolicy>>` | Per-bot policy: `GPTBot`, `ClaudeBot`, `PerplexityBot`, … |
+| `llmsTxtUrl` | `string` | URL to `/llms.txt` (adds discoverable link tag) |
+| `markdownUrl` | `string` | Alternate Markdown version of the page |
+| `faq` | `FaqItem[]` | Auto-builds `FAQPage` JSON-LD |
+| `howTo` | `HowToConfig` | Auto-builds `HowTo` JSON-LD |
+| `speakable` | `SpeakableConfig` | CSS/XPath selectors for voice assistants |
+| `citation` | `CitationConfig` | Author, dates, license for AI attribution |
+| `entities` | `EntityReference[]` | Named entities with optional `sameAs` URLs |
+| `schema` | `AeoSchemaConfig[]` | Typed AI-oriented Schema.org blocks |
+| `jsonLd` | `Record<string, unknown>[]` | Raw JSON-LD |
+| `jsonLdGraph` | `Record<string, unknown>[]` | Multiple nodes in one `@graph` |
+| `customAiMetaTags` | `{ name, content }[]` | Extra AI-oriented meta tags |
+
+### Supported AI crawlers (`aiRobots`)
+
+`GPTBot`, `ChatGPT-User`, `ClaudeBot`, `anthropic-ai`, `Google-Extended`, `PerplexityBot`, `Bytespider`, `Applebot-Extended`, `cohere-ai`, `CCBot`
+
+### Full AEO example
+
+```typescript
+AeoManager.updateAeo({
+  llmsTxtUrl: 'https://example.com/llms.txt',
+  markdownUrl: 'https://example.com/blog/seo-tips.md',
+  pageSummary: {
+    title: '10 SEO Tips for SPAs',
+    description: 'A practical guide to SPA SEO and AEO.',
+    url: 'https://example.com/blog/seo-tips',
+    language: 'en',
+    keyPoints: [
+      'Set canonical URLs on every route',
+      'Add FAQ schema for AI snippets',
+      'Publish llms.txt for agent discovery',
+    ],
+    topics: ['seo', 'spa', 'aeo'],
+    entities: [
+      { name: 'Google', type: 'Organization', sameAs: ['https://www.google.com'] },
+    ],
+  },
+  aiRobots: {
+    GPTBot: 'allow',
+    ClaudeBot: 'allow',
+    'Google-Extended': 'disallow',
+  },
+  citation: {
+    author: 'Jane Doe',
+    publishedAt: '2025-06-01T10:00:00Z',
+    license: 'https://creativecommons.org/licenses/by/4.0/',
+  },
+  faq: [
+    { question: 'What is AEO?', answer: 'Answer Engine Optimization for AI systems.' },
+  ],
+  jsonLdGraph: [
+    { '@type': 'WebSite', name: 'My Blog', url: 'https://example.com' },
+    { '@type': 'WebPage', name: '10 SEO Tips', url: 'https://example.com/blog/seo-tips' },
+  ],
+});
 ```
 
 ---
@@ -481,21 +625,20 @@ All types are exported from the package:
 
 ```typescript
 import {
+  SeoManager,
   SeoManagerPro,
+  AeoManager,
+  AeoPresets,
   SeoConfig,
+  AeoConfig,
   SchemaType,
   OpenGraphConfig,
   TwitterConfig,
-  BreadcrumbItem,
+  PageSummary,
+  LlmsTxtConfig,
 } from 'seo-manager-pro';
 ```
 
----
-## 🔗 Live Demos
-
-Want to see how `seo-manager-pro` works in real projects?
-
-➡️ [See all demos on GitHub](https://github.com/mbsh-code/seo-manager-pro-demos)
 
 Includes:
 - ✅ Angular Demo
